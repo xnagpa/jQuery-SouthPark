@@ -1,0 +1,231 @@
+﻿<html>
+  <head>
+    <title>jQuery Selectors Lab Page</title>
+   
+   
+	<link href="css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery-ui-1.10.3.custom.js"></script>
+	
+	<script>
+	
+	$(function(){
+	var moneyAmount = 0;
+	var  kyle_got_money =[
+	"<p>Занял у Баттерса до завтра. До завтра, да.</p>",
+	"<p>Нашел на улице 100$! </p>",
+	"<p>Продал еще лимонада! </p>",
+	"<p>Излазил все фонтаны в городе, все монетки мои!</p>",
+	"<p>Разбил копилку Картмана</p>",
+	];
+	var  kyle_bought=[
+	"<p>Я купил! Я купил! Я определенно счастлив. Наверное..</p>",
+	"<p>Теперь это моё!</p>",
+	"<p>Я не жертва общества потребления! Просто все это покупают.</p>",
+	"<p>Мама меня прибьёт...</p>",
+	"<p>Божечки,чтобы купить это, мне пришлось продать Xbox Картмана. Надеюсь, он не обидится...</p>",
+	];
+	
+	var  kyle_dont_have_money =[
+	"<p>Я должен срочно достать деньги, ведь это мне так нужно!</p>",
+	"<p>Картман будет смеяться надо мной, если я приду в школу без этого.</p>",
+	"<p>Не хватает. Может дать Баттерсу кредит?</p>",
+	"<p>Мало денег. Если я заложу ростовщику свой iPhone должно хватить</p>",
+	"<p>Мне это так нужно, так нужно!!!</p>",
+	];
+	
+	
+	$( "#addMoneyButton" ).button();
+	$( "#spendingsButton" ).button();
+	$("#kyle_calm").css("display","inline");
+	
+	
+	$("#addMoneyButton").on("click",function()
+	{
+		
+	    var temp=$("#addMoneyInput").val();
+		if (temp!=null)
+		{
+			moneyAmount +=parseInt(temp);
+			$("#whenSalary").text("У вас есть  "+moneyAmount +" рублей");
+
+			var item = kyle_got_money[Math.floor(Math.random()*kyle_got_money.length)];			
+			$("#bubble").hide().html(item).fadeIn("slow");
+
+			$("#kyle_sad").css("display","none");
+			$("#kyle_happy").fadeIn("slow");
+			$("#kyle_calm").css("display","none");
+
+		}
+		
+			
+	});
+	
+	$("#spendingsButton").on("click",function()
+	{
+		var spendingsAmount = $("#spendingsAmountInput").val();
+		var spendingsPurpose = $("#spendingsPurposeInput").val();
+		//alert(spendingsAmount+"   "+ spendingsPurpose);
+		moneyAmount -= parseInt(spendingsAmount);
+		if (moneyAmount<0)
+		{
+			var appendString = "<p>На цель:"+spendingsPurpose+" не хватает "+moneyAmount+" рублей </p>";
+			$(appendString).hide().appendTo($("#spendingsList")).fadeIn("slow");
+
+			moneyAmount += parseInt(spendingsAmount);
+
+			var item = kyle_dont_have_money[Math.floor(Math.random()*kyle_dont_have_money.length)];			
+			$("#bubble").hide().html(item).fadeIn("slow");
+
+			//$("#kyle_sad").css("display","inline");
+			$("#kyle_sad").fadeIn("slow");
+			$("#kyle_happy").css("display","none");
+			$("#kyle_calm").css("display","none");
+
+			
+		}
+		else
+		{
+			var appendString = "<p>На цель:"+spendingsPurpose+" потрачено "+ spendingsAmount+" рублей</p>";
+			$("#whenSalary").text("У вас есть  "+moneyAmount +" рублей");
+			$(appendString).hide().appendTo($("#spendingsList")).fadeIn("slow");
+
+			var item = kyle_bought[Math.floor(Math.random()*kyle_bought.length)];			
+			$("#bubble").hide().html(item).fadeIn("slow");
+
+
+			$("#kyle_sad").css("display","none");
+			$("#kyle_happy").css("display","none");
+			$("#kyle_calm").fadeIn("slow");
+		}
+		
+		//$("#spendingsList").append(appendString);
+
+			
+	});
+	
+	});
+	
+	
+	</script>
+	<style>
+		.main_container{
+			background-color:#25314A; 
+			overflow:auto;
+		}
+		.header{
+			width:100%; 
+			background-color:#25314A; 
+			margin-bottom: 20px;
+		}
+
+		.header_text{
+			float:left;
+			width:39%;
+			margin-left: 1%;
+			color:white;
+		}
+
+		.header_text h1{
+			font-family: Verdana;
+		}
+		.header_img{
+		    float:left;
+		    width:60%;
+		    text-align:right;
+		}
+
+		.left_col{
+			float:left;
+			 width:46%;
+			 background-color: white;
+			 height: 420px;
+			border: 1px solid black;
+			margin-right: 1%;
+			margin-left: 1%;
+			padding:1%;
+		}
+		.middle_col{
+			float:left; 
+			width:22%; 
+			background-color: white;
+			border: 1px solid black;
+			overflow:auto; 
+			height: 420px;
+
+			padding:1%;
+		}
+		.right_col{
+			float:left; 
+			width:25%
+		}
+		#bubble{
+			background-color: white;
+			border: 1px solid black;
+			border-radius: 50px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+	</style>
+   
+  </head>
+
+  <body>
+  	<div class="main_container" >
+  	<div class="header">
+  		<div class="header_text">
+	  		<h1>Кайл и расходы</h1>
+	  		<h2>Вот так дела! Кайл заметил, что в последнее время тратит чересчур много карманных денег!</h2>
+	  		<h2>Помоги Кайлу посчитать его расходы и понять, куда же уходят его деньги.</h2>
+	  	</div>
+	  	<div class= "header_img">
+	  		<img src="guys.png" >
+	  	</div>	
+		<div style="clear:both"></div>
+  	</div>
+  
+     <div class="left_col" >
+	    <h2 id="whenSalary">Сколько у вас денег?</h2>	
+		<input type="text" id="addMoneyInput"/>
+		<button id="addMoneyButton">Занести деньги</button>
+		<h3>На что хотим потратить?</h3>	
+
+		 
+   		 <select name="spendingsPurposeInput" id="spendingsPurposeInput">
+		      <option>Конфеты</option>
+		      <option selected="selected">Обед в школе</option>
+		      <option>Playstation 3</option>
+		      <option>Alpha mio</option>
+		      <option>Аккаунт Wow</option>
+		      <option>Nintendo DS</option>
+		      <option>Аккаунт Lineage</option>
+		      <option>Свидание</option>
+		      <option>Джедайский меч</option>
+		     
+  		  </select>
+
+		<h3>Сколько хотим потратить?</h3>
+		<input type="text" id="spendingsAmountInput"/>
+		<button id="spendingsButton">Потратить</button>
+		
+	</div>
+ 	<div class="middle_col" >
+		 <h2>Куда ушли деньги</h2>		
+		<div id="spendingsList"><p>Сперва занесите деньги, а потом купите все что захотите!</p></div>
+	</div>
+
+	 <div class="right_col">
+
+	   <div id="bubble"><p>Я заработал немного денег, продавая лимонад. Нужно занести их в копилку.</p></div>
+	   <img id="kyle_happy" src="Kyle-1.png" style="margin-left:50px; display:none"/>
+	   <img id="kyle_calm" src="Kyle-2.png" style="margin-left:50px; display:none"/>
+	   <img id="kyle_sad" src="Kyle-3.png" style="margin-left:50px; display:none"/>
+	</div>
+	
+
+	<div style="clear:both"></div>
+		</div>
+
+  </body>
+</html>
