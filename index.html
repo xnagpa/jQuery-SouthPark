@@ -10,7 +10,7 @@
 	<script>
 	
 	$(function(){
-	var moneyAmount = 0;
+	var moneyAmount = 100;
 	var  kyle_got_money =[
 	"<p>Занял у Баттерса до завтра. До завтра, да.</p>",
 	"<p>Народ, я нашел на улице 100$! </p>",
@@ -38,7 +38,7 @@
 	$( "#addMoneyButton" ).button();
 	$( "#spendingsButton" ).button();
 	$("#kyle_calm").css("display","inline");
-	
+	$("#whenSalary").text("У вас есть  "+moneyAmount +" рублей");
 	
 	$("#addMoneyButton").on("click",function()
 	{
